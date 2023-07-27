@@ -6,8 +6,10 @@ import com.example.studentapp.sevice.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -18,9 +20,10 @@ public class StudentController {
   StudentService studentService;
 
   @PostMapping
-  public ResponseEntity<Student> createStudent(@RequestBody Student student) {
-    Student createdStudent = studentService.createStudent(student);
-    return new ResponseEntity<>(createdStudent, HttpStatus.CREATED);
+  public ResponseEntity<Student> createStudent(@Valid @RequestBody Student student) {
+      Student createdStudent = studentService.createStudent(student);
+
+    return new ResponseEntity<Student>(createdStudent, HttpStatus.CREATED);
   }
 
   @GetMapping("/{id}")
